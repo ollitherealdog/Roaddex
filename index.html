@@ -176,6 +176,16 @@ input[type=text],input[type=password],select{font-size:16px;padding:15px}
 @keyframes fill{from{transform:scaleX(0)}}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}.chips span{border:1px solid var(--l);border-radius:99px;padding:4px 12px;font-size:12px;color:var(--m)}
 .c:hover{transform:translateY(-4px)}
+
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--l);margin-right:10px}.dot.on{background:#3ddc84;box-shadow:0 0 10px #3ddc84}
+.ra{display:flex;gap:8px;flex:none}.s button{min-height:42px;padding:8px 16px;font-size:14px;border-radius:12px}
+#v-trade .s{font-size:16px;padding:14px 0}#v-trade .s:last-child{border-bottom:0}
+#whw{position:relative;width:min(72vw,320px);aspect-ratio:1;margin:22px auto 8px}
+#wh{position:absolute;inset:0;border-radius:50%;border:4px solid var(--a);box-shadow:0 0 40px -10px var(--a),inset 0 0 26px #000a;transition:transform 4.2s cubic-bezier(.12,.7,.12,1)}
+#whp{position:absolute;left:50%;top:-16px;margin-left:-14px;width:0;height:0;border-left:14px solid transparent;border-right:14px solid transparent;border-top:30px solid var(--a);z-index:3;filter:drop-shadow(0 0 8px var(--a))}
+#whc{position:absolute;left:50%;top:50%;width:70px;height:70px;margin:-35px 0 0 -35px;border-radius:50%;background:#000;border:3px solid var(--a);z-index:2;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800}
+.lg2{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:14px}
+#spin{background:linear-gradient(135deg,#ffffff,#bdbdbd);box-shadow:0 8px 24px -10px #ffffff}
 </style></head><body>
 
 <div id="splash"><div class="sc"><div class="scard"><svg viewBox="0 0 300 100"><path pathLength="1" d="M10 70 L18 70 C20 58 32 52 42 52 C52 52 62 58 64 70 L216 70 C218 58 230 52 240 52 C250 52 260 58 262 70 L286 70 L290 58 L270 46 L222 40 L184 22 L116 22 L72 42 L30 48 L14 56 Z"/><circle pathLength="1" cx="42" cy="70" r="13"/><circle pathLength="1" cx="240" cy="70" r="13"/></svg><span class="sp">★ LEGEND ★</span></div><i class="k k1"></i><i class="k k2"></i><i class="k k3"></i><i class="k k4"></i><i class="ln"></i></div><h1>ROADDEX</h1><p data-i="tag"></p><div class="bar"></div></div>
@@ -207,10 +217,11 @@ input[type=text],input[type=password],select{font-size:16px;padding:15px}
   <div class="gate"><div style="font-size:54px">◎</div><p data-i="allowTxt"></p><button id="allow" data-i="allow"></button><button class="ghost" id="pickA" data-i="pick"></button></div>
   <div id="busy"><div class="spin"></div><span data-i="analyzing"></span></div></div>
  <div class="ctrl" id="ctrl" style="display:none"><button class="ghost" id="pickB" data-i="pick"></button><button class="shut" id="shut"></button></div>
- <input type="file" id="file" accept="image/*" hidden>
+ <input type="file" id="file" accept="image/*" tabindex="-1" aria-hidden="true" style="position:absolute;left:0;top:0;width:1px;height:1px;opacity:0;pointer-events:none">
 </section>
 <section class="view" id="v-col"><div class="stats"><div><b id="s1">0</b><small data-i="total"></small></div><div><b id="s2">0</b><small data-i="unique"></small></div><div><b id="s3">–</b><small data-i="best"></small></div></div><div id="grid" class="grid"></div></section>
-<section class="view" id="v-trade"><div class="box"><h3>⇄ <span data-i="tradeT"></span></h3><p class="mut" data-i="liveD" style="margin-bottom:14px"></p><div class="fl"><input type="text" id="tq" data-p="findU" autocapitalize="none"><button id="tf" data-i="find"></button></div></div></section>
+<section class="view" id="v-wheel"><div class="box" style="text-align:center"><h3 data-i="wheelT"></h3><p class="mut" data-i="wheelD"></p><div id="whw"><i id="whp"></i><div id="wh"></div><b id="whc">0</b></div><div class="lg2" id="lgd"></div><p class="acc" id="whn" style="margin:16px 0 12px;font-size:20px"></p><button id="spin" style="width:100%"></button></div><div class="box"><h3 data-i="coinsH"></h3><p class="mut" data-i="coinsD"></p></div></section>
+<section class="view" id="v-trade"><div class="box"><h3>+ <span data-i="addT"></span></h3><p class="mut" data-i="addD" style="margin-bottom:14px"></p><div class="fl"><input type="text" id="tq" data-p="findU" autocapitalize="none" autocomplete="off" autocorrect="off" spellcheck="false"><button id="tf" data-i="add"></button></div></div><div class="box" id="frq" hidden><h3 data-i="reqT"></h3><div id="frl"></div></div><div class="box"><h3>⇄ <span data-i="friendsT"></span></h3><div id="fli"></div></div></section>
 <section class="view" id="v-set">
  <div class="box"><div class="tg"><span data-i="lang"></span><select id="lang" style="width:auto"><option value="de">Deutsch</option><option value="en">English</option></select></div>
   <label class="tg"><span><span data-i="sn"></span><small data-i="snD"></small></span><input type="checkbox" id="sn"></label>
@@ -221,7 +232,7 @@ input[type=text],input[type=password],select{font-size:16px;padding:15px}
  <button class="ghost" id="clr" data-i="clear" style="margin-bottom:10px"></button><button class="ghost" id="out" data-i="logout"></button>
 </section>
 </main>
-<nav><button class="on" data-v="scan"><i>◎</i><span data-i="scan"></span></button><button data-v="col"><i>▦</i><span data-i="col"></span></button><button data-v="trade"><i>⇄</i><span data-i="trade"></span></button><button data-v="set"><i>⚙</i><span data-i="set"></span></button></nav>
+<nav><button class="on" data-v="scan"><i>◎</i><span data-i="scan"></span></button><button data-v="col"><i>▦</i><span data-i="col"></span></button><button data-v="wheel"><i>✦</i><span data-i="wheel"></span></button><button data-v="trade"><i>⇄</i><span data-i="friends"></span></button><button data-v="set"><i>⚙</i><span data-i="set"></span></button></nav>
 </div>
 <div id="room"></div><div id="wel"></div><div id="req"></div><div id="ov"></div><div id="toast"></div>
 
@@ -236,8 +247,8 @@ const FB={apiKey:"AIzaSyAP2RqqTuOlDEji0p4zmGYvPxzQmAMizBc",authDomain:"rodexo-1.
 
 const $=s=>document.querySelector(s);
 const T={
-de:{tag:"SCANNE ALLES, WAS FÄHRT",a1:"Willkommen! In 3 Schritten startklar:",a2:"Öffne Google AI Studio und melde dich mit deinem Google-Konto an.",a3:"Tippe auf „Create API key“ und kopiere den Key. Er ist gratis.",a4:"Erstelle hier dein Konto und füge den Key ein. Er wird verschlüsselt gespeichert, du verlierst ihn nie.",getKey:"Gratis-Key holen",o1t:"Scannen",o1d:"Richte die Kamera auf ein Auto oder einen LKW. Die KI erkennt Marke und Modell. Am besten von vorne, mit sichtbarem Logo.",o2t:"Sammeln",o2d:"Jedes Fahrzeug wird zu einer Karte mit Seltenheit, von Gewöhnlich bis Legendär. Kennzeichen werden auf deinen Fotos verdeckt.",o3t:"Traden",o3d:"Tausche Karten mit Freunden: Benutzernamen suchen, zwei Karten wählen, Anfrage senden.",skip:"Überspringen",go0:"Los geht’s",photo:"Dein Foto",approx:"Werte sind Schätzungen.",flipH:"Tippen zum Umdrehen.",starterMsg:"Dein Startauto!",liveD:"Such einen Freund, der gerade online ist, und lade ihn zum Tausch ein.",off:"ist gerade offline.",wait:"Warte auf",cancelT:"Abbrechen",mine:"Deine Karte",recv:"Neue Karte!",trBtn:"Traden",confirm:"Bestätige den Tausch",acc:"Akzeptieren",xT:"Der Tausch wurde abgebrochen.",expired:"Die Einladung ist abgelaufen.",next:"Weiter",login:"Anmelden",reg:"Registrieren",user:"Benutzername",pw:"Passwort (mind. 6 Zeichen)",key:"Gemini-API-Key",go1:"Anmelden",go2:"Konto erstellen",secure:"Dein Key wird mit deinem Passwort verschlüsselt. Nicht mal der Betreiber kann ihn lesen.",eName:"Benutzername: 3–16 Zeichen (a–z, 0–9, _).",ePw:"Passwort: mindestens 6 Zeichen.",eKey:"Bitte füge deinen API-Key ein.",eBad:"Benutzername oder Passwort falsch.",eTaken:"Der Name ist schon vergeben.",eFb:"Cloud ist noch nicht eingerichtet: Firebase-Config fehlt oder konnte nicht geladen werden.",hi:"Willkommen,",scan:"Scannen",col:"Sammlung",trade:"Traden",set:"Optionen",allowTxt:"ROADDEX braucht deine Kamera, um Fahrzeuge zu erkennen.",allow:"Kamera erlauben",pick:"Foto wählen",camErr:"Kamera nicht verfügbar. Nutze „Foto wählen“.",noKey:"Es fehlt dein API-Key. Trag ihn hier ein.",noVeh:"Kein Fahrzeug erkannt. Geh näher ran.",limit:"Dein Gratis-Limit ist aufgebraucht. Warte kurz oder versuch es morgen wieder.",apiErr:"API-Fehler",errT:"Hoppla",front:"Ich bin nicht sicher, welches Auto das ist. Scanne es bitte mit der Marke von vorne (Logo und Kühlergrill). Das Kennzeichen wird dabei ausgeblendet.",net:"Keine Verbindung. Prüfe dein Internet.",busyErr:"Gemini ist gerade überlastet. Versuch es gleich nochmal.",parse:"Die Antwort war nicht lesbar. Scanne bitte noch einmal.",badKey:"API-Key ungültig. Prüfe ihn in den Optionen.",analyzing:"Analysiere …",total:"Fahrzeuge",unique:"Modelle",best:"Bestes",empty:"Noch nichts gesammelt. Scanne dein erstes Fahrzeug!",tradeT:"Tauschbörse",findU:"Benutzername suchen",find:"Einladen",get:"Du bekommst:",give:"Du gibst:",send:"Anfrage senden",sent:"Anfrage gesendet!",nf:"Nutzer nicht gefunden.",self:"Das bist du selbst.",closed:"Nimmt keine Tauschanfragen an.",reqs:"Meine Anfragen",none:"Keine Anfragen.",pending:"wartet …",accepted:"angenommen ✓",declined:"abgelehnt",wants:"möchte tauschen!",yes:"Annehmen",no:"Ablehnen",gone:"Du hast die Karte nicht mehr.",done:"Tausch abgeschlossen!",got:"Erhalten:",close:"Schließen",del:"Löschen",dupe:"Hast du schon! Jetzt ×",nw:"Neu in deiner Sammlung!",rar:{common:"Gewöhnlich",uncommon:"Ungewöhnlich",rare:"Selten",epic:"Episch",legendary:"Legendär"},lang:"Sprache",sn:"Großer Modus",snD:"Größere Schrift und Tasten, mehr Kontrast",rm:"Weniger Animationen",rmD:"Ruhiger und schonender",trOn:"Tauschanfragen zulassen",trD:"Andere können dir Angebote schicken",cam:"Kamera",camB:"Erneut anfragen",cam_granted:"Erlaubt ✓",cam_prompt:"Noch nicht erlaubt",cam_denied:"Blockiert. Erlaube sie in den Browser-Einstellungen (Schloss-Symbol).",cam_unk:"Status unbekannt",save:"Speichern",pwAsk:"Passwort zum Verschlüsseln eingeben:",saved:"Gespeichert",logout:"Abmelden",clear:"Sammlung löschen",sure:"Wirklich alles löschen?"},
-en:{tag:"SCAN EVERYTHING THAT DRIVES",a1:"Welcome! Ready in 3 steps:",a2:"Open Google AI Studio and sign in with your Google account.",a3:"Tap “Create API key” and copy it. It’s free.",a4:"Create your account here and paste the key. It’s stored encrypted, so you never lose it.",getKey:"Get free key",o1t:"Scan",o1d:"Point the camera at a car or truck. The AI recognizes make and model. Works best from the front, with the badge visible.",o2t:"Collect",o2d:"Every vehicle becomes a card with a rarity, from Common to Legendary. License plates are hidden in your photos.",o3t:"Trade",o3d:"Swap cards with friends: search a username, pick two cards, send the request.",skip:"Skip",go0:"Let’s go",photo:"Your photo",approx:"Values are estimates.",flipH:"Tap to flip.",starterMsg:"Your starter car!",liveD:"Find a friend who is online right now and invite them to trade.",off:"is offline right now.",wait:"Waiting for",cancelT:"Cancel",mine:"Your card",recv:"New card!",trBtn:"Trade",confirm:"Confirm the trade",acc:"Accept",xT:"The trade was cancelled.",expired:"The invitation has expired.",next:"Next",login:"Log in",reg:"Sign up",user:"Username",pw:"Password (min. 6 characters)",key:"Gemini API key",go1:"Log in",go2:"Create account",secure:"Your key is encrypted with your password. Not even the operator can read it.",eName:"Username: 3–16 characters (a–z, 0–9, _).",ePw:"Password: at least 6 characters.",eKey:"Please paste your API key.",eBad:"Wrong username or password.",eTaken:"That name is taken.",eFb:"Cloud isn’t set up: Firebase config missing or couldn’t be loaded.",hi:"Welcome,",scan:"Scan",col:"Collection",trade:"Trade",set:"Options",allowTxt:"ROADDEX needs your camera to identify vehicles.",allow:"Allow camera",pick:"Choose photo",camErr:"Camera unavailable. Use “Choose photo”.",noKey:"Your API key is missing. Enter it here.",noVeh:"No vehicle found. Get closer.",limit:"Your free limit is used up. Wait a moment or try again tomorrow.",apiErr:"API error",errT:"Oops",front:"I’m not sure which car this is. Please scan it from the front, showing the badge and grille. The license plate gets hidden.",net:"No connection. Check your internet.",busyErr:"Gemini is overloaded right now. Try again in a moment.",parse:"The answer was unreadable. Please scan again.",badKey:"Invalid API key. Check it in Options.",analyzing:"Analyzing …",total:"Vehicles",unique:"Models",best:"Best",empty:"Nothing collected yet. Scan your first vehicle!",tradeT:"Trade market",findU:"Search username",find:"Invite",get:"You get:",give:"You give:",send:"Send request",sent:"Request sent!",nf:"User not found.",self:"That’s you.",closed:"Not accepting trade requests.",reqs:"My requests",none:"No requests.",pending:"waiting …",accepted:"accepted ✓",declined:"declined",wants:"wants to trade!",yes:"Accept",no:"Decline",gone:"You no longer own that card.",done:"Trade complete!",got:"Received:",close:"Close",del:"Delete",dupe:"Already owned! Now ×",nw:"New in your collection!",rar:{common:"Common",uncommon:"Uncommon",rare:"Rare",epic:"Epic",legendary:"Legendary"},lang:"Language",sn:"Large mode",snD:"Bigger text and buttons, more contrast",rm:"Fewer animations",rmD:"Calmer and gentler",trOn:"Allow trade requests",trD:"Others can send you offers",cam:"Camera",camB:"Ask again",cam_granted:"Allowed ✓",cam_prompt:"Not allowed yet",cam_denied:"Blocked. Allow it in your browser settings (lock icon).",cam_unk:"Status unknown",save:"Save",pwAsk:"Enter your password to encrypt:",saved:"Saved",logout:"Log out",clear:"Clear collection",sure:"Delete everything?"}};
+de:{friends:"Freunde",wheel:"Rad",wheelT:"Glücksrad",wheelD:"Dreh für 3 Coins und gewinne ein Auto: mindestens Selten, mit Glück Episch oder Legendär.",spin:"Drehen (3 🪙)",needCoins:"Du brauchst 3 Coins. Scanne Fahrzeuge, um welche zu bekommen.",coinsH:"So bekommst du Coins",coinsD:"Jeder Scan gibt Coins: Gewöhnlich 1, Ungewöhnlich 2, Selten 4, Episch 8, Legendär 15.",won:"Gewonnen!",wheelReason:"Gewonnen am Glücksrad.",addT:"Freund hinzufügen",addD:"Gib den Benutzernamen ein. Die Person bekommt eine Anfrage und muss sie annehmen.",add:"Hinzufügen",friendsT:"Deine Freunde",reqT:"Freundschaftsanfragen",frSent:"Anfrage gesendet an @",frAlready:"Ihr seid schon befreundet.",frNow:"Jetzt befreundet mit @",frWants:"möchte dein Freund sein.",frNone:"Noch keine Freunde. Füge jemanden über den Benutzernamen hinzu.",online:"online",offline:"offline",tradeB:"Tauschen",frSure:"Freund wirklich entfernen?",imgErr:"Das Foto konnte nicht gelesen werden. Versuch ein anderes.",rulesErr:"Freunde sind noch nicht freigeschaltet: Die Firebase-Regeln müssen aktualisiert werden.",tag:"SCANNE ALLES, WAS FÄHRT",a1:"Willkommen! In 3 Schritten startklar:",a2:"Öffne Google AI Studio und melde dich mit deinem Google-Konto an.",a3:"Tippe auf „Create API key“ und kopiere den Key. Er ist gratis.",a4:"Erstelle hier dein Konto und füge den Key ein. Er wird verschlüsselt gespeichert, du verlierst ihn nie.",getKey:"Gratis-Key holen",o1t:"Scannen",o1d:"Richte die Kamera auf ein Auto oder einen LKW. Die KI erkennt Marke und Modell. Am besten von vorne, mit sichtbarem Logo.",o2t:"Sammeln",o2d:"Jedes Fahrzeug wird zu einer Karte mit Seltenheit, von Gewöhnlich bis Legendär. Kennzeichen werden auf deinen Fotos verdeckt.",o3t:"Traden",o3d:"Füge Freunde per Benutzername hinzu und tausche Karten. Fürs Scannen gibt es Coins, mit denen du am Glücksrad Autos gewinnst.",skip:"Überspringen",go0:"Los geht’s",photo:"Dein Foto",approx:"Werte sind Schätzungen.",flipH:"Tippen zum Umdrehen.",starterMsg:"Dein Startauto!",liveD:"Such einen Freund, der gerade online ist, und lade ihn zum Tausch ein.",off:"ist gerade offline.",wait:"Warte auf",cancelT:"Abbrechen",mine:"Deine Karte",recv:"Neue Karte!",trBtn:"Traden",confirm:"Bestätige den Tausch",acc:"Akzeptieren",xT:"Der Tausch wurde abgebrochen.",expired:"Die Einladung ist abgelaufen.",next:"Weiter",login:"Anmelden",reg:"Registrieren",user:"Benutzername",pw:"Passwort (mind. 6 Zeichen)",key:"Gemini-API-Key",go1:"Anmelden",go2:"Konto erstellen",secure:"Dein Key wird mit deinem Passwort verschlüsselt. Nicht mal der Betreiber kann ihn lesen.",eName:"Benutzername: 3–16 Zeichen (a–z, 0–9, _).",ePw:"Passwort: mindestens 6 Zeichen.",eKey:"Bitte füge deinen API-Key ein.",eBad:"Benutzername oder Passwort falsch.",eTaken:"Der Name ist schon vergeben.",eFb:"Cloud ist noch nicht eingerichtet: Firebase-Config fehlt oder konnte nicht geladen werden.",hi:"Willkommen,",scan:"Scannen",col:"Sammlung",trade:"Traden",set:"Optionen",allowTxt:"ROADDEX braucht deine Kamera, um Fahrzeuge zu erkennen.",allow:"Kamera erlauben",pick:"Foto wählen",camErr:"Kamera nicht verfügbar. Nutze „Foto wählen“.",noKey:"Es fehlt dein API-Key. Trag ihn hier ein.",noVeh:"Kein Fahrzeug erkannt. Geh näher ran.",limit:"Dein Gratis-Limit ist aufgebraucht. Warte kurz oder versuch es morgen wieder.",apiErr:"API-Fehler",errT:"Hoppla",front:"Ich bin nicht sicher, welches Auto das ist. Scanne es bitte mit der Marke von vorne (Logo und Kühlergrill). Das Kennzeichen wird dabei ausgeblendet.",net:"Keine Verbindung. Prüfe dein Internet.",busyErr:"Gemini ist gerade überlastet. Versuch es gleich nochmal.",parse:"Die Antwort war nicht lesbar. Scanne bitte noch einmal.",badKey:"API-Key ungültig. Prüfe ihn in den Optionen.",analyzing:"Analysiere …",total:"Fahrzeuge",unique:"Modelle",best:"Bestes",empty:"Noch nichts gesammelt. Scanne dein erstes Fahrzeug!",tradeT:"Tauschbörse",findU:"Benutzername (ohne @)",find:"Einladen",get:"Du bekommst:",give:"Du gibst:",send:"Anfrage senden",sent:"Anfrage gesendet!",nf:"Nutzer nicht gefunden. Prüfe den Namen. Ältere Konten müssen sich einmal neu anmelden.",self:"Das bist du selbst.",closed:"Nimmt keine Tauschanfragen an.",reqs:"Meine Anfragen",none:"Keine Anfragen.",pending:"wartet …",accepted:"angenommen ✓",declined:"abgelehnt",wants:"möchte tauschen!",yes:"Annehmen",no:"Ablehnen",gone:"Du hast die Karte nicht mehr.",done:"Tausch abgeschlossen!",got:"Erhalten:",close:"Schließen",del:"Löschen",dupe:"Hast du schon! Jetzt ×",nw:"Neu in deiner Sammlung!",rar:{common:"Gewöhnlich",uncommon:"Ungewöhnlich",rare:"Selten",epic:"Episch",legendary:"Legendär"},lang:"Sprache",sn:"Großer Modus",snD:"Größere Schrift und Tasten, mehr Kontrast",rm:"Weniger Animationen",rmD:"Ruhiger und schonender",trOn:"Tauschanfragen zulassen",trD:"Andere können dir Angebote schicken",cam:"Kamera",camB:"Erneut anfragen",cam_granted:"Erlaubt ✓",cam_prompt:"Noch nicht erlaubt",cam_denied:"Blockiert. Erlaube sie in den Browser-Einstellungen (Schloss-Symbol).",cam_unk:"Status unbekannt",save:"Speichern",pwAsk:"Passwort zum Verschlüsseln eingeben:",saved:"Gespeichert",logout:"Abmelden",clear:"Sammlung löschen",sure:"Wirklich alles löschen?"},
+en:{friends:"Friends",wheel:"Wheel",wheelT:"Lucky wheel",wheelD:"Spin for 3 coins and win a car: Rare at least, with luck Epic or Legendary.",spin:"Spin (3 🪙)",needCoins:"You need 3 coins. Scan vehicles to earn some.",coinsH:"How to get coins",coinsD:"Every scan pays coins: Common 1, Uncommon 2, Rare 4, Epic 8, Legendary 15.",won:"You won!",wheelReason:"Won on the lucky wheel.",addT:"Add friend",addD:"Enter their username. They get a request and have to accept it.",add:"Add",friendsT:"Your friends",reqT:"Friend requests",frSent:"Request sent to @",frAlready:"You are already friends.",frNow:"Now friends with @",frWants:"wants to be your friend.",frNone:"No friends yet. Add someone by username.",online:"online",offline:"offline",tradeB:"Trade",frSure:"Really remove this friend?",imgErr:"The photo could not be read. Try another one.",rulesErr:"Friends are not enabled yet: the Firebase rules need to be updated.",tag:"SCAN EVERYTHING THAT DRIVES",a1:"Welcome! Ready in 3 steps:",a2:"Open Google AI Studio and sign in with your Google account.",a3:"Tap “Create API key” and copy it. It’s free.",a4:"Create your account here and paste the key. It’s stored encrypted, so you never lose it.",getKey:"Get free key",o1t:"Scan",o1d:"Point the camera at a car or truck. The AI recognizes make and model. Works best from the front, with the badge visible.",o2t:"Collect",o2d:"Every vehicle becomes a card with a rarity, from Common to Legendary. License plates are hidden in your photos.",o3t:"Trade",o3d:"Add friends by username and swap cards. Scans earn coins you can spin on the lucky wheel for cars.",skip:"Skip",go0:"Let’s go",photo:"Your photo",approx:"Values are estimates.",flipH:"Tap to flip.",starterMsg:"Your starter car!",liveD:"Find a friend who is online right now and invite them to trade.",off:"is offline right now.",wait:"Waiting for",cancelT:"Cancel",mine:"Your card",recv:"New card!",trBtn:"Trade",confirm:"Confirm the trade",acc:"Accept",xT:"The trade was cancelled.",expired:"The invitation has expired.",next:"Next",login:"Log in",reg:"Sign up",user:"Username",pw:"Password (min. 6 characters)",key:"Gemini API key",go1:"Log in",go2:"Create account",secure:"Your key is encrypted with your password. Not even the operator can read it.",eName:"Username: 3–16 characters (a–z, 0–9, _).",ePw:"Password: at least 6 characters.",eKey:"Please paste your API key.",eBad:"Wrong username or password.",eTaken:"That name is taken.",eFb:"Cloud isn’t set up: Firebase config missing or couldn’t be loaded.",hi:"Welcome,",scan:"Scan",col:"Collection",trade:"Trade",set:"Options",allowTxt:"ROADDEX needs your camera to identify vehicles.",allow:"Allow camera",pick:"Choose photo",camErr:"Camera unavailable. Use “Choose photo”.",noKey:"Your API key is missing. Enter it here.",noVeh:"No vehicle found. Get closer.",limit:"Your free limit is used up. Wait a moment or try again tomorrow.",apiErr:"API error",errT:"Oops",front:"I’m not sure which car this is. Please scan it from the front, showing the badge and grille. The license plate gets hidden.",net:"No connection. Check your internet.",busyErr:"Gemini is overloaded right now. Try again in a moment.",parse:"The answer was unreadable. Please scan again.",badKey:"Invalid API key. Check it in Options.",analyzing:"Analyzing …",total:"Vehicles",unique:"Models",best:"Best",empty:"Nothing collected yet. Scan your first vehicle!",tradeT:"Trade market",findU:"Username (without @)",find:"Invite",get:"You get:",give:"You give:",send:"Send request",sent:"Request sent!",nf:"User not found. Check the name. Older accounts need to log in once again.",self:"That’s you.",closed:"Not accepting trade requests.",reqs:"My requests",none:"No requests.",pending:"waiting …",accepted:"accepted ✓",declined:"declined",wants:"wants to trade!",yes:"Accept",no:"Decline",gone:"You no longer own that card.",done:"Trade complete!",got:"Received:",close:"Close",del:"Delete",dupe:"Already owned! Now ×",nw:"New in your collection!",rar:{common:"Common",uncommon:"Uncommon",rare:"Rare",epic:"Epic",legendary:"Legendary"},lang:"Language",sn:"Large mode",snD:"Bigger text and buttons, more contrast",rm:"Fewer animations",rmD:"Calmer and gentler",trOn:"Allow trade requests",trD:"Others can send you offers",cam:"Camera",camB:"Ask again",cam_granted:"Allowed ✓",cam_prompt:"Not allowed yet",cam_denied:"Blocked. Allow it in your browser settings (lock icon).",cam_unk:"Status unknown",save:"Save",pwAsk:"Enter your password to encrypt:",saved:"Saved",logout:"Log out",clear:"Clear collection",sure:"Delete everything?"}};
 const RAR=["common","uncommon","rare","epic","legendary"];
 const ld=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
 const UI=Object.assign({lang:(navigator.language||"de").startsWith("de")?"de":"en",sn:false,rm:false},ld("rd_ui",{}));
@@ -249,6 +260,9 @@ const vib=()=>{if(!UI.rm)navigator.vibrate?.(30)};
 const cnt=(sel,v)=>{const e=$(sel),f=+e.textContent||0;if(UI.rm||f===v){e.textContent=v;return}const t0=performance.now();(function k(n){const p=Math.min(1,(n-t0)/700);e.textContent=Math.round(f+(v-f)*p);if(p<1)requestAnimationFrame(k)})(t0)};
 const burst=(c,n)=>{if(UI.rm)return;const o=$("#room.on")||$("#ov");for(let i=0;i<n;i++){const p=document.createElement("i"),a=Math.random()*6.283,d=90+Math.random()*170;p.className="pt";p.style.cssText=`--dx:${Math.cos(a)*d}px;--dy:${Math.sin(a)*d}px;background:${c};animation-delay:${Math.random()*.2}s`;o.appendChild(p);setTimeout(()=>p.remove(),1500)}};
 const pub=c=>({id:c.id,make:c.make??"",model:c.model??"",variant:c.variant??"",years:c.years??"",rar:c.rar??"common",reason:c.reason??"",img:c.img??"",pic:c.pic??"",hp:c.hp??0,kmh:c.kmh??0,s100:c.s100??0,engine:c.engine??"",drive:c.drive??""});
+const sImg=u=>{u=String(u??"");return u===CARSVG||(u.length<200000&&/^data:image\/jpeg;base64,[A-Za-z0-9+\/=]+$/.test(u))||(u.length<400&&/^https:\/\/upload\.wikimedia\.org\/[\w\/.,%()\-]+$/.test(u))?u:""};
+const clean=c=>{if(!c||typeof c!=="object")return null;const S=(v,n)=>String(v??"").slice(0,n);
+ return{id:S(c.id,80).replace(/[^\w-]/g,"")||"x",make:S(c.make,40),model:S(c.model,40),variant:S(c.variant,40),years:S(c.years,20),rar:RAR.includes(c.rar)?c.rar:"common",reason:S(c.reason,160),img:sImg(c.img),pic:c.pic===undefined?undefined:sImg(c.pic),hp:num(c.hp,3000),kmh:num(c.kmh,600),s100:num(c.s100,30),engine:S(c.engine,40),drive:["FWD","RWD","AWD"].includes(c.drive)?c.drive:"",count:Math.max(1,Math.min(9999,parseInt(c.count)||1)),ts:Number(c.ts)||0}};
 const slug=(...a)=>a.join(" ").toLowerCase().replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"")||"x";
 
 const ok=!!FB.apiKey&&!!FB.databaseURL&&!!initializeApp;let auth,db;
@@ -270,10 +284,12 @@ function render(){
  document.querySelectorAll("[data-p]").forEach(e=>e.placeholder=t(e.dataset.p));$("#n0").textContent=t(sl===2?"go0":"next");
  $("#go").textContent=t(mode==="login"?"go1":"go2");if(!ok&&!me)$("#err").textContent=t("eFb");
  $("#lang").value=UI.lang;$("#sn").checked=UI.sn;$("#rm").checked=UI.rm;$("#tr").checked=prof.trades!==false;
- $("#who").textContent=prof.name?"@"+prof.name:"";
+ $("#who").textContent=prof.name?"🪙 "+coinsOf()+"  @"+prof.name:"";
+ $("#whc").textContent=coinsOf();$("#whn").textContent="🪙 "+coinsOf();$("#spin").textContent=t("spin");$("#spin").disabled=spinning;
+ $("#lgd").innerHTML=["rare","epic","legendary"].map(r=>`<span class="pill r-${r}">${t("rar")[r]}</span>`).join("");renderFr();
  cnt("#s1",C.reduce((a,x)=>a+x.count,0));cnt("#s2",C.length);
  const b=C.reduce((a,x)=>Math.max(a,RAR.indexOf(x.rar)),-1);$("#s3").textContent=b<0?"–":t("rar")[RAR[b]];
- $("#grid").innerHTML=C.length?C.map((e,i)=>`<div class="c r-${e.rar}" style="--n:${i}" data-id="${esc(e.id)}"><img src="${e.pic||e.img}" alt=""><span class="rb">${t("rar")[e.rar]}</span>${e.count>1?`<span class="cnt">×${e.count}</span>`:""}<div class="tx"><b>${esc(e.make)} ${esc(e.model)}</b><small>${esc(e.variant)||"&nbsp;"}${e.hp?" · "+e.hp+" PS":""}</small></div></div>`).join(""):`<p class="empty" style="grid-column:1/-1">${t("empty")}</p>`;
+ $("#grid").innerHTML=C.length?C.map((e,i)=>`<div class="c r-${e.rar}" style="--n:${i}" data-id="${esc(e.id)}"><img src="${esc(e.pic||e.img)}" alt=""><span class="rb">${t("rar")[e.rar]}</span>${e.count>1?`<span class="cnt">×${e.count}</span>`:""}<div class="tx"><b>${esc(e.make)} ${esc(e.model)}</b><small>${esc(e.variant)||"&nbsp;"}${e.hp?" · "+e.hp+" PS":""}</small></div></div>`).join(""):`<p class="empty" style="grid-column:1/-1">${t("empty")}</p>`;
  
 }
 const go=v=>{document.querySelectorAll(".view").forEach(e=>e.classList.toggle("on",e.id==="v-"+v));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.v===v))};
@@ -286,33 +302,45 @@ async function camSt(){try{const p=await navigator.permissions.query({name:"came
 $("#allow").onclick=startCam;$("#camB").onclick=startCam;
 $("#shut").onclick=()=>{const f=document.createElement("i");f.className="fx";$("#cam").appendChild(f);setTimeout(()=>f.remove(),450);vib();scan(vid,vid.videoWidth,vid.videoHeight)};
 ["#pickA","#pickB"].forEach(s=>$(s).onclick=()=>$("#file").click());
-$("#file").onchange=e=>{const f=e.target.files[0];if(!f)return;const i=new Image();i.onload=()=>{scan(i,i.naturalWidth,i.naturalHeight);URL.revokeObjectURL(i.src)};i.src=URL.createObjectURL(f);e.target.value=""};
+$("#file").onchange=async e=>{
+ const f=e.target.files[0];e.target.value="";if(!f)return;
+ let src,w,h;
+ try{if(!window.createImageBitmap)throw 0;src=await createImageBitmap(f);w=src.width;h=src.height}
+ catch(_){try{src=await new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=URL.createObjectURL(f)});w=src.naturalWidth;h=src.naturalHeight}catch(x){return toast(t("imgErr"))}}
+ scan(src,w,h);
+};
 const jpeg=(s,w,h,m,q,pl)=>{const r=Math.min(1,m/Math.max(w,h)),c=document.createElement("canvas"),W=c.width=Math.round(w*r),H=c.height=Math.round(h*r),x=c.getContext("2d");x.drawImage(s,0,0,W,H);x.fillStyle="#0b0d14";(Array.isArray(pl)?pl:[]).forEach(b=>{if(!Array.isArray(b)||b.length<4)return;const[y1,x1,y2,x2]=b.map(Number),bw=(x2-x1)/1000*W,bh=(y2-y1)/1000*H;x.fillRect(x1/1000*W-bw*.15,y1/1000*H-bh*.25,bw*1.3,bh*1.5)});return c.toDataURL("image/jpeg",q)};
 
 // Erkennung (Gemini)
-const MODELS=["gemini-2.5-flash","gemini-flash-latest","gemini-2.0-flash"],PRO=["gemini-2.5-pro"];
+const MODELS=["gemini-2.5-flash","gemini-flash-latest","gemini-2.5-flash-lite","gemini-2.0-flash"],PRO=["gemini-2.5-pro"];
 const PROMPT=()=>`You are an expert automotive identifier for a car-collecting game. Identify the single most prominent road vehicle (car, truck, bus, van, motorcycle) in the photo.
 Work carefully: check badges and logos, grille, headlight and taillight signature, body shape, wheels, roofline and any visible model lettering. Name the exact generation or facelift and the trim when you can see it. Never guess a make you cannot support with visible evidence; lower the confidence instead.
 Reply with ONLY this JSON:
 {"is_vehicle":boolean,"type":"car|truck|bus|van|motorcycle|other","view":"front|rear|side|other","make":string,"model":string,"variant":string (trim or edition such as "Competition", empty if unsure),"years":string (e.g. "2021-2024"),"rarity":"common|uncommon|rare|epic|legendary","reason":string (max 12 words, written in ${UI.lang==="de"?"German":"English"}),"confidence":number 0-1 (be honest: 0.9+ only if a badge, model lettering or an unmistakable design is visible),"hp":number (approximate power in PS),"kmh":number (approximate top speed),"s100":number (approximate 0-100 km/h seconds),"engine":string (short, e.g. "3.0 L twin-turbo I6"),"drive":"FWD|RWD|AWD","plates":[[ymin,xmin,ymax,xmax]]}
 "plates" holds one box for every visible license plate, coordinates normalized 0-1000, or an empty array.
 Rarity guide: common = mass-market everyday cars and delivery trucks (VW Golf, Toyota Corolla, Mercedes Sprinter); uncommon = premium or sporty trims (BMW 3 Series, Audi A4 S line); rare = performance models (BMW M3 Competition, Mercedes-AMG C63, Porsche 911 Carrera) and heavy trucks like Mercedes Actros or Arocs; epic = supercars, exotics, special editions (Lamborghini Huracán, McLaren 720S, 911 GT3 RS); legendary = hypercars, tiny production runs, icons (Ferrari F40, Bugatti, Porsche Carrera GT). If no vehicle is visible set is_vehicle=false.`;
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 async function ask(data,models=MODELS){
+ let last="",busy=false,quota=false;
  for(const m of models){
-  let r;
-  try{r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`,{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":KEY},body:JSON.stringify({contents:[{parts:[{text:PROMPT()},{inline_data:{mime_type:"image/jpeg",data}}]}],generationConfig:{temperature:.1,responseMimeType:"application/json"}})})}catch(e){throw new Error(t("net"))}
-  if(r.status===404)continue;
-  if(!r.ok){
-   let msg="";try{msg=(await r.json()).error?.message||""}catch(e){}
-   if(r.status===429)throw new Error(t("limit"));
-   if((r.status===400||r.status===403)&&/api key|API_KEY/i.test(msg))throw new Error(t("badKey"));
-   if(r.status>=500)throw new Error(t("busyErr"));
-   throw new Error(t("apiErr")+" "+r.status+(msg?": "+msg.slice(0,90):""));
+  for(let a=0;a<2;a++){
+   let r;
+   try{r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${m}:generateContent`,{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":KEY},signal:AbortSignal.timeout(45000),body:JSON.stringify({contents:[{parts:[{text:PROMPT()},{inline_data:{mime_type:"image/jpeg",data}}]}],generationConfig:{temperature:.1,responseMimeType:"application/json"}})})}
+   catch(e){if(e&&e.name==="TimeoutError"){busy=true;break}throw new Error(t("net"))}
+   if(r.status===404)break;
+   if(!r.ok){
+    let msg="";try{msg=(await r.json()).error?.message||""}catch(e){}
+    if((r.status===400||r.status===403)&&/api key|API_KEY/i.test(msg))throw new Error(t("badKey"));
+    if(r.status===429){quota=true;break}
+    if(r.status>=500){busy=true;if(a===0)await sleep(1500);continue}
+    last=t("apiErr")+" "+r.status+(msg?": "+msg.slice(0,90):"");break;
+   }
+   const j=await r.json(),txt=(j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join("");
+   try{let o=JSON.parse(txt.replace(/```json|```/g,"").trim());if(Array.isArray(o))o=o[0];if(o&&typeof o==="object")return o}catch(e){}
+   last=t("parse");
   }
-  const j=await r.json(),txt=(j.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join("");
-  try{return JSON.parse(txt.replace(/```json|```/g,"").trim())}catch(e){throw new Error(t("parse"))}
  }
- throw new Error(t("apiErr")+" 404");
+ throw new Error(busy?t("busyErr"):quota?t("limit"):last||t("apiErr")+" 404");
 }
 function fail(m){
  const o=$("#ov");
@@ -323,7 +351,7 @@ async function scan(src,w,h){if($("#busy").classList.contains("on"))return;
  if(!KEY){toast(t("noKey"));go("set");return}
  $("#busy").classList.add("on");
  try{
-  const img=jpeg(src,w,h,1280,.85).split(",")[1];
+  const img=jpeg(src,w,h,1024,.82).split(",")[1];
   let r=await ask(img);
   if(r.is_vehicle&&(r.confidence??0)<.75){try{const r2=await ask(img,PRO);if(r2.is_vehicle&&(r2.confidence??0)>(r.confidence??0))r=r2}catch(e){}}
   if(!r.is_vehicle)return fail(t("noVeh"));
@@ -331,7 +359,7 @@ async function scan(src,w,h){if($("#busy").classList.contains("on"))return;
   const id=slug(r.make,r.model,r.variant),dupe=C.find(x=>x.id===id);let e=dupe;
   if(e){e.count++;await set(R("cars/"+me.uid+"/"+id+"/count"),e.count)}
   else{e={id,make:r.make,model:r.model||"",variant:r.variant||"",years:r.years||"",rar:RAR.includes(r.rarity)?r.rarity:"common",reason:r.reason||"",img:jpeg(src,w,h,420,.7,r.plates),pic:await getPic(r.make,r.model,r.type),hp:num(r.hp,3000),kmh:num(r.kmh,600),s100:num(r.s100,30),engine:String(r.engine||"").slice(0,40),drive:["FWD","RWD","AWD"].includes(r.drive)?r.drive:"",count:1,ts:Date.now()};C.unshift(e);await set(R("cars/"+me.uid+"/"+id),e)}
-  vib();render();show(e,dupe?t("dupe")+e.count:t("nw"),false,true);
+  const g=COIN[e.rar]||1;await setCoins(coinsOf()+g);vib();render();show(e,(dupe?t("dupe")+e.count:t("nw"))+"  +"+g+" 🪙",false,true);
  }catch(err){fail(err.message||t("apiErr"))}
  finally{$("#busy").classList.remove("on")}
 }
@@ -340,7 +368,8 @@ const CAR="M10 70 L18 70 C20 58 32 52 42 52 C52 52 62 58 64 70 L216 70 C218 58 2
 const CARSVG="data:image/svg+xml,"+encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"><rect width="400" height="300" fill="#0d0d0d"/><g fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round" transform="translate(52 96) scale(1.06)"><path d="${CAR}"/><circle cx="42" cy="70" r="13"/><circle cx="240" cy="70" r="13"/></g></svg>`);
 document.addEventListener("error",ev=>{const i=ev.target;if(i&&i.tagName==="IMG"&&i.src!==CARSVG)i.src=CARSVG},true);
 const num=(x,mx)=>{x=Number(x);return isFinite(x)&&x>0&&x<mx?Math.round(x*10)/10:0};
-const STARTER={id:"starter-golf",make:"Volkswagen",model:"Golf",variant:"Startauto",years:"2012-2019",rar:"common",hp:110,kmh:200,s100:9.4,engine:"1.4 TSI",drive:"FWD",img:CARSVG,count:1};
+const STARTERS=[["Volkswagen","Golf","2012-2019",110,200,9.4,"1.4 TSI","FWD"],["Opel","Corsa","2019-2023",100,190,10.5,"1.2 L Turbo","FWD"],["Toyota","Yaris","2020-2024",116,175,9.7,"1.5 L Hybrid","FWD"],["Ford","Fiesta","2017-2023",100,185,10.5,"1.0 L EcoBoost","FWD"],["Renault","Clio","2019-2024",100,190,10.5,"1.0 L TCe","FWD"],["Fiat","500","2007-2023",69,160,12.9,"1.2 L","FWD"],["Skoda","Octavia","2020-2024",110,200,10.2,"1.0 TSI","FWD"],["Dacia","Sandero","2021-2024",91,175,12,"1.0 L TCe","FWD"],["Mini","Cooper","2014-2023",136,210,7.9,"1.5 L Turbo","FWD"],["Honda","Civic","2017-2021",129,200,10.5,"1.0 L VTEC Turbo","FWD"]];
+const pickStarter=()=>{const x=STARTERS[Math.floor(Math.random()*STARTERS.length)];return{id:"starter-"+slug(x[0],x[1]),make:x[0],model:x[1],variant:"Startauto",years:x[2],rar:"common",hp:x[3],kmh:x[4],s100:x[5],engine:x[6],drive:x[7],img:CARSVG,count:1}};
 async function getPic(...q){
  try{
   const u="https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&generator=search&gsrlimit=4&prop=pageimages&piprop=thumbnail&pithumbsize=800&gsrsearch="+encodeURIComponent(q.filter(Boolean).join(" ")+" automobile");
@@ -353,7 +382,7 @@ async function fillPic(e){const p=await getPic(e.make,e.model,"car");e.pic=p;try
 const bar=(l,p,txt,d)=>`<div class="st"><span>${l}</span><i><u style="--w:${Math.max(4,Math.min(100,p||0))}%;--d:${d}s"></u></i><b>${txt}</b></div>`;
 function show(e,msg,del,flip){
  const o=$("#ov"),n=(v,u)=>v?v+u:"–";
- o.innerHTML=`<div class="wrap">${msg?`<p class="acc tcn">${esc(msg)}</p>`:""}<div class="fc r-${e.rar}"><div class="fi"><div class="ff"><img src="${e.pic||e.img}" alt=""><div class="bd"><span class="pill">${t("rar")[e.rar]}</span><h2>${esc(e.make)} ${esc(e.model)}</h2><p class="mut">${esc(e.variant)}${e.years?" · "+esc(e.years):""}</p>${bar("PS",(e.hp||0)/8,n(e.hp," PS"),.7)}${bar("km/h",(e.kmh||0)/4,n(e.kmh," km/h"),.85)}${bar("0–100",e.s100?(12-e.s100)*10:0,n(e.s100," s"),1)}<div class="chips">${e.engine?`<span>${esc(e.engine)}</span>`:""}${e.drive?`<span>${esc(e.drive)}</span>`:""}<span>×${e.count||1}</span></div></div></div><div class="fb"><img src="${e.img}" alt=""><div class="bd"><span class="pill">${t("photo")}</span><p>${esc(e.reason)}</p><p class="mut" style="font-size:13px">${t("approx")} ${t("flipH")}</p></div></div></div></div><div class="row">${del?`<button class="ghost" id="rm1">${t("del")}</button>`:""}<button id="cl">${t("close")}</button></div></div>`;
+ o.innerHTML=`<div class="wrap">${msg?`<p class="acc tcn">${esc(msg)}</p>`:""}<div class="fc r-${e.rar}"><div class="fi"><div class="ff"><img src="${esc(e.pic||e.img)}" alt=""><div class="bd"><span class="pill">${t("rar")[e.rar]}</span><h2>${esc(e.make)} ${esc(e.model)}</h2><p class="mut">${esc(e.variant)}${e.years?" · "+esc(e.years):""}</p>${bar("PS",(e.hp||0)/8,n(e.hp," PS"),.7)}${bar("km/h",(e.kmh||0)/4,n(e.kmh," km/h"),.85)}${bar("0–100",e.s100?(12-e.s100)*10:0,n(e.s100," s"),1)}<div class="chips">${e.engine?`<span>${esc(e.engine)}</span>`:""}${e.drive?`<span>${esc(e.drive)}</span>`:""}<span>×${e.count||1}</span></div></div></div><div class="fb"><img src="${esc(e.img)}" alt=""><div class="bd"><span class="pill">${t("photo")}</span><p>${esc(e.reason)}</p><p class="mut" style="font-size:13px">${t("approx")} ${t("flipH")}</p></div></div></div></div><div class="row">${del?`<button class="ghost" id="rm1">${t("del")}</button>`:""}<button id="cl">${t("close")}</button></div></div>`;
  o.classList.add("on");const fc=o.querySelector(".fc");
  fc.onclick=()=>{fc.classList.toggle("flipped");vib()};
  $("#cl").onclick=()=>o.classList.remove("on");
@@ -365,13 +394,13 @@ $("#ov").onpointermove=ev=>{const b=$(".fc");if(!b||UI.rm)return;const r=b.getBo
 $("#grid").onclick=ev=>{const c=ev.target.closest(".c");const e=c&&C.find(x=>x.id===c.dataset.id);if(e)show(e,"",true)};
 
 // Live-Tausch
-const mini=(e,sel)=>`<div class="c r-${e.rar} ${sel===e.id?"sel":""}" data-id="${esc(e.id)}"><img src="${e.pic||e.img}" alt=""><div class="tx"><b>${esc(e.make)} ${esc(e.model)}</b></div></div>`;
+const mini=(e,sel)=>`<div class="c r-${e.rar} ${sel===e.id?"sel":""}" data-id="${esc(e.id)}"><img src="${esc(e.pic||e.img)}" alt=""><div class="tx"><b>${esc(e.make)} ${esc(e.model)}</b></div></div>`;
 const take=(m,id)=>{const o=C.find(x=>x.id===id);if(!o)return false;m["cars/"+me.uid+"/"+id+(o.count>1?"/count":"")]=o.count>1?o.count-1:null;return true};
-const give=(m,c)=>{const o=C.find(x=>x.id===c.id);if(o)m["cars/"+me.uid+"/"+c.id+"/count"]=o.count+1;else m["cars/"+me.uid+"/"+c.id]={...pub(c),ts:Date.now(),count:1}};
-async function loadCars(){C=Object.values((await get(R("cars/"+me.uid))).val()||{}).sort((a,b)=>(b.ts||0)-(a.ts||0))}
+const give=(m,c)=>{c=clean(c);if(!c)return;const o=C.find(x=>x.id===c.id);if(o)m["cars/"+me.uid+"/"+c.id+"/count"]=o.count+1;else m["cars/"+me.uid+"/"+c.id]={...pub(c),ts:Date.now(),count:1}};
+async function loadCars(){C=Object.values((await get(R("cars/"+me.uid))).val()||{}).map(clean).filter(Boolean).sort((a,b)=>(b.ts||0)-(a.ts||0))}
 let sid=null,sess=null,swapped=false,anim=false,fin=false,starting=false,cdn=-1,raf=0,od=null,unsubS=null,off=0;
 const now=()=>Date.now()+off,oid=()=>sess.a===me.uid?sess.b:sess.a,oname=()=>sess.a===me.uid?sess.bn:sess.an;
-const slot=(c,lab,cls)=>`<div class="rs ${cls} ${c?"r-"+c.rar:""}"><span class="lb">${esc(lab)}</span>${c?`<img src="${c.pic||c.img}" alt=""><div class="tx"><b>${esc(c.make)} ${esc(c.model)}</b><small class="mut">${esc(c.variant)}</small><span class="pill">${t("rar")[c.rar]}</span></div>`:`<div class="ph">?</div>`}</div>`;
+const slot=(c,lab,cls)=>`<div class="rs ${cls} ${c?"r-"+c.rar:""}"><span class="lb">${esc(lab)}</span>${c?`<img src="${esc(c.pic||c.img)}" alt=""><div class="tx"><b>${esc(c.make)} ${esc(c.model)}</b><small class="mut">${esc(c.variant)}</small><span class="pill">${t("rar")[c.rar]}</span></div>`:`<div class="ph">?</div>`}</div>`;
 const BC={rare:"#3b9bff",epic:"#b45cff",legendary:"#ffb020"};
 function room(){
  const o=$("#room");if(anim)return;
@@ -428,7 +457,7 @@ function onSess(){
 }
 function openRoom(id){
  sid=id;sess=null;swapped=anim=fin=starting=false;
- unsubS=onValue(R("live/"+id),s=>{sess=s.val();onSess()});
+ unsubS=onValue(R("live/"+id),s=>{sess=s.val();if(sess&&sess.c)Object.keys(sess.c).forEach(k=>{sess.c[k]=clean(sess.c[k])});onSess()});
  od=onDisconnect(R("live/"+id+"/st"));od.set("x");popReq();
 }
 function closeRoom(){
@@ -439,12 +468,55 @@ function closeRoom(){
  $("#room").classList.remove("on");$("#room").innerHTML="";
  if(host&&id)setTimeout(()=>remove(R("live/"+id)).catch(()=>{}),20000);
 }
+// Freunde
+let fr={},frq=[],onl={},pu={},frErr=false;
+const nameOf=x=>String(x&&x.name||"?").replace(/[^\w]/g,"").slice(0,16)||"?";
+const cleanFr=v=>Object.fromEntries(Object.entries(v||{}).map(([k,x])=>[k,{name:nameOf(x)}]));
+function watchFr(){
+ Object.keys(pu).forEach(k=>{if(!fr[k]){pu[k]();delete pu[k];delete onl[k]}});
+ Object.keys(fr).forEach(k=>{if(!pu[k])pu[k]=onValue(R("presence/"+k),s=>{onl[k]=!!s.val();renderFr()},()=>{})});
+}
+function renderFr(){
+ const ids=Object.keys(fr).sort((a,b)=>(onl[b]?1:0)-(onl[a]?1:0)||fr[a].name.localeCompare(fr[b].name));
+ $("#frq").hidden=!frq.length;
+ $("#frl").innerHTML=frq.map(r=>`<div class="s"><b>@${esc(r.name)}</b><span class="ra"><button class="ghost" data-no="${esc(r.id)}">${t("no")}</button><button class="btn" data-ok="${esc(r.id)}">${t("yes")}</button></span></div>`).join("");
+ $("#fli").innerHTML=frErr?`<p class="mut">${t("rulesErr")}</p>`:ids.length?ids.map(id=>`<div class="s"><span><i class="dot ${onl[id]?"on":""}"></i><b>@${esc(fr[id].name)}</b> <small class="mut">${onl[id]?t("online"):t("offline")}</small></span><span class="ra">${onl[id]?`<button class="btn" data-tr="${esc(id)}">${t("tradeB")}</button>`:""}<button class="ghost" data-rm="${esc(id)}">✕</button></span></div>`).join(""):`<p class="mut">${t("frNone")}</p>`;
+}
+async function acceptFr(id){
+ const r=frq.find(x=>x.id===id);if(!r)return;
+ await update(ref(db),{["friends/"+me.uid+"/"+id]:{name:r.name},["friends/"+id+"/"+me.uid]:{name:prof.name}});
+ await remove(R("friendReqs/"+me.uid+"/"+id));
+ toast(t("frNow")+r.name);
+}
 $("#tf").onclick=async()=>{
- const n=$("#tq").value.trim().toLowerCase();if(!n||sid)return;
+ const n=$("#tq").value.trim().toLowerCase().replace(/^@+/,"");if(!n)return;
+ const b=$("#tf");b.disabled=true;
  try{
-  const u=(await get(R("names/"+n))).val();if(!u)return toast(t("nf"));
+  const u=(await get(R("names/"+n))).val();
+  if(!u)return toast(t("nf"));
   if(u===me.uid)return toast(t("self"));
-  const p=(await get(R("profiles/"+u))).val()||{};if(p.trades===false)return toast(t("closed"));
+  if(fr[u])return toast(t("frAlready"));
+  if(frq.find(x=>x.id===u)){await acceptFr(u);$("#tq").value="";return}
+  await set(R("friendReqs/"+u+"/"+me.uid),{name:prof.name,ts:Date.now()});
+  $("#tq").value="";toast(t("frSent")+n);
+ }catch(e){toast(e.code||e.message)}
+ finally{b.disabled=false}
+};
+$("#tq").onkeydown=e=>{if(e.key==="Enter")$("#tf").click()};
+$("#v-trade").onclick=async ev=>{
+ const b=ev.target.closest("button");if(!b||!me)return;const d=b.dataset;
+ try{
+  if(d.ok)await acceptFr(d.ok);
+  else if(d.no)await remove(R("friendReqs/"+me.uid+"/"+d.no));
+  else if(d.tr&&fr[d.tr])await startTrade(d.tr,fr[d.tr].name);
+  else if(d.rm&&confirm(t("frSure")))await update(ref(db),{["friends/"+me.uid+"/"+d.rm]:null,["friends/"+d.rm+"/"+me.uid]:null});
+ }catch(e){toast(e.code||e.message)}
+};
+async function startTrade(u,n){
+ if(sid)return;
+ try{
+  const p=(await get(R("profiles/"+u))).val()||{};
+  if(p.trades===false)return toast(t("closed"));
   if(!(await get(R("presence/"+u))).val())return toast("@"+(p.name||n)+" "+t("off"));
   if(!C.length)return toast(t("empty"));
   const id=push(ref(db)).key;
@@ -452,7 +524,7 @@ $("#tf").onclick=async()=>{
   onDisconnect(R("invites/"+u+"/"+id)).remove();
   openRoom(id);
  }catch(e){toast(e.code||e.message)}
-};
+}
 function popReq(){
  const r=inc[0],q=$("#req");
  if(!r||sid||prof.trades===false){q.classList.remove("on");return}
@@ -471,7 +543,9 @@ function listen(){
  unsub=[
   onValue(ref(db,".info/serverTimeOffset"),s=>{off=s.val()||0}),
   onValue(ref(db,".info/connected"),s=>{if(s.val()===true){const q=R("presence/"+me.uid);onDisconnect(q).remove();set(q,true)}}),
-  onValue(R("invites/"+me.uid),s=>{inc=Object.entries(s.val()||{}).map(([id,x])=>({id,...x}));popReq()})
+  onValue(R("invites/"+me.uid),s=>{inc=Object.entries(s.val()||{}).map(([id,x])=>({id,...x}));popReq()}),
+  onValue(R("friends/"+me.uid),s=>{frErr=false;fr=cleanFr(s.val());watchFr();renderFr()},()=>{frErr=true;renderFr()}),
+  onValue(R("friendReqs/"+me.uid),s=>{const was=frq.length;frq=Object.entries(s.val()||{}).map(([id,x])=>({id,name:nameOf(x)}));renderFr();if(frq.length>was){vib();toast("@"+frq[frq.length-1].name+" "+t("frWants"))}},()=>{frErr=true;renderFr()})
  ];
 }
 
@@ -507,9 +581,9 @@ $("#go").onclick=async()=>{
   let u,k=key;
   if(mode==="reg"){
    u=(await createUserWithEmailAndPassword(auth,mail(n),pw)).user;
-   await set(R("keys/"+u.uid),await seal(key,pw));
-   await set(R("names/"+n),u.uid);
-   await set(R("profiles/"+u.uid),{name:n,lower:n,trades:true});
+   await set(R("profiles/"+u.uid),{name:n,lower:n,trades:true,coins:0});await set(R("names/"+n),u.uid);try{await set(R("keys/"+u.uid),await seal(key,pw))}catch(e){console.warn("Key nicht in der Cloud gespeichert",e)}
+   
+   
   }else{
    u=(await signInWithEmailAndPassword(auth,mail(n),pw)).user;
    try{k=await unseal((await get(R("keys/"+u.uid))).val(),pw)}catch(e){k=""}
@@ -521,9 +595,11 @@ $("#go").onclick=async()=>{
 };
 async function enter(u){
  me=u;const nm=u.email.split("@")[0];
- prof=(await get(R("profiles/"+u.uid))).val()||{name:nm,lower:nm,trades:true};
+ const ps=await get(R("profiles/"+u.uid));prof=ps.val()||{name:nm,lower:nm,trades:true};
+ if(!ps.exists())try{await set(R("profiles/"+u.uid),prof)}catch(e){}
+ try{if((await get(R("names/"+nm))).val()!==u.uid)await set(R("names/"+nm),u.uid)}catch(e){}
  await loadCars();let gift=null;
- if(!prof.starter){const st={...STARTER,reason:UI.lang==="de"?"Dein erstes Auto. Los geht’s!":"Your first car. Let’s go!",pic:await getPic("Volkswagen","Golf","car"),ts:Date.now()};await update(ref(db),{["cars/"+u.uid+"/"+st.id]:st,["profiles/"+u.uid+"/starter"]:true});prof.starter=true;gift=st;await loadCars()}
+ if(!prof.starter){const S0=pickStarter(),st={...S0,reason:UI.lang==="de"?"Dein erstes Auto. Los geht’s!":"Your first car. Let’s go!",pic:await getPic(S0.make,S0.model,"car"),ts:Date.now()};await update(ref(db),{["cars/"+u.uid+"/"+st.id]:st,["profiles/"+u.uid+"/starter"]:true});prof.starter=true;gift=st;await loadCars()}
  C.filter(x=>x.pic===undefined).slice(0,6).forEach(fillPic);
  KEY=localStorage.getItem("rd_k_"+u.uid)||"";
  const w=$("#wel");w.innerHTML=`<svg class="ck" viewBox="0 0 52 52"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg><h2>${t("hi")} @${esc(prof.name)}</h2>`;w.classList.add("on");vib();$("#auth").classList.add("out");
@@ -532,6 +608,39 @@ async function enter(u){
  $("#app").hidden=false;$("#app").classList.add("in");render();listen();camSt();
  if(!KEY){toast(t("noKey"));go("set")}if(gift)setTimeout(()=>show(gift,t("starterMsg"),false,true),600);
 }
+// Coins & Glücksrad
+const COIN={common:1,uncommon:2,rare:4,epic:8,legendary:15},SPIN=3;
+const coinsOf=()=>Math.max(0,Math.floor(Number(prof.coins)||0));
+async function setCoins(n){prof.coins=n;try{await set(R("profiles/"+me.uid+"/coins"),n)}catch(e){toast(e.code||e.message)}render()}
+const WS=["rare","epic","rare","rare","legendary","rare","epic","rare","rare","epic","rare","epic"];
+const WCOL={rare:"#3b9bff",epic:"#b45cff",legendary:"#ffb020"};
+const POOL={
+ rare:[["BMW","M3","Competition","2021-2024",510,290,3.5,"3.0 L twin-turbo I6","AWD"],["Mercedes-AMG","C 63","S","2015-2021",510,290,4,"4.0 L twin-turbo V8","RWD"],["Porsche","911","Carrera","2019-2024",385,293,4.2,"3.0 L twin-turbo flat-6","RWD"],["Audi","RS3","","2021-2024",400,280,3.8,"2.5 L turbo I5","AWD"],["Ford","Mustang","GT","2018-2023",466,250,4.3,"5.0 L V8","RWD"],["Alpine","A110","S","2019-2024",292,260,4.2,"1.8 L turbo I4","RWD"],["Toyota","GR Supra","","2019-2024",387,250,4.1,"3.0 L turbo I6","RWD"]],
+ epic:[["Lamborghini","Huracán","EVO","2019-2023",640,325,2.9,"5.2 L V10","AWD"],["McLaren","720S","","2017-2023",720,341,2.9,"4.0 L twin-turbo V8","RWD"],["Porsche","911","GT3 RS","2022-2024",525,296,3.2,"4.0 L flat-6","RWD"],["Ferrari","488","GTB","2015-2019",670,330,3,"3.9 L twin-turbo V8","RWD"],["Nissan","GT-R","Nismo","2017-2024",600,315,2.5,"3.8 L twin-turbo V6","AWD"]],
+ legendary:[["Ferrari","F40","","1987-1992",478,324,4.1,"2.9 L twin-turbo V8","RWD"],["Bugatti","Chiron","","2016-2024",1500,420,2.4,"8.0 L quad-turbo W16","AWD"],["Porsche","Carrera GT","","2004-2006",612,330,3.9,"5.7 L V10","RWD"],["McLaren","F1","","1992-1998",627,386,3.2,"6.1 L V12","RWD"],["Koenigsegg","Agera","RS","2015-2018",1360,447,2.8,"5.0 L twin-turbo V8","RWD"]]
+};
+let spinning=false,wr=0;
+$("#wh").style.background="repeating-conic-gradient(from -.6deg,#000 0 1.2deg,transparent 1.2deg 30deg),conic-gradient("+WS.map((r,i)=>WCOL[r]+" "+i*30+"deg "+(i+1)*30+"deg").join(",")+")";
+$("#spin").onclick=async()=>{
+ if(spinning||!me)return;
+ if(coinsOf()<SPIN)return toast(t("needCoins"));
+ spinning=true;render();
+ try{
+  const idx=Math.floor(Math.random()*WS.length),rar=WS[idx],L=POOL[rar],p=L[Math.floor(Math.random()*L.length)],t0=Date.now();
+  await setCoins(coinsOf()-SPIN);
+  const c=idx*30+15+(Math.random()*14-7);
+  wr+=1800+((((-c-wr)%360)+360)%360);
+  $("#wh").style.transform="rotate("+wr+"deg)";vib();
+  const id=slug(p[0],p[1],p[2]),dupe=C.find(x=>x.id===id);let e=dupe;
+  if(e){e.count++;await set(R("cars/"+me.uid+"/"+id+"/count"),e.count)}
+  else{e={id,make:p[0],model:p[1],variant:p[2],years:p[3],rar,reason:t("wheelReason"),img:CARSVG,pic:await getPic(p[0],p[1],"car"),hp:p[4],kmh:p[5],s100:p[6],engine:p[7],drive:p[8],count:1,ts:Date.now()};C.unshift(e);await set(R("cars/"+me.uid+"/"+id),e)}
+  await sleep(Math.max(0,(UI.rm?200:4400)-(Date.now()-t0)));
+  spinning=false;render();
+  show(e,t("won")+" "+t("rar")[rar]+(dupe?"  ×"+e.count:""),false,true);
+ }catch(err){toast(err.code||err.message)}
+ finally{spinning=false;render()}
+};
+
 document.querySelectorAll(".pn").forEach(p=>[...p.children].forEach((e,i)=>e.style.animationDelay=i*70+"ms"));
 if(ok)onAuthStateChanged(auth,u=>{if(u&&!authing)enter(u)});
 render();
